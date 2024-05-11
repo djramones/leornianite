@@ -1,0 +1,69 @@
+{% extends "notes/base.html" %}
+
+{% block title %}Drill Notes{% endblock %}
+
+{% block content %}
+    <h1><i class="bi-arrow-repeat"></i> Drill Notes</h1>
+
+    {% if request.method == 'GET' %}
+        {% if disable_begin %}
+            <p>Drill requires at least two notes.</p>
+        {% else %}
+            <form method="post" action="{% url 'notes:drill-notes' %}">
+                {% csrf_token %}
+                <button type="submit">
+                    <i class="bi-play"></i> Begin Drill
+                </button>
+            </form>
+        {% endif %}
+    {% elif request.method == 'POST' %}
+        {% if error %}
+            <div>
+                Sorry, an error was encountered.
+                {% if error == 'insufficient-collection' %}
+                    There are not enough notes.
+                {% endif %}
+            </div>
+        {% else %}
+            {% if note.promoted %}
+                <p>
+                    <i class="bi-star-fill"></i> Promoted Note
+                </p>
+            {% endif %}
+            <div>
+                {% include 'notes/includes/note_card.html' with object=note omit_controls=True %}
+            </div>
+            <div>
+                {% if not note.promoted %}
+                    <form method="post" action="{% url 'notes:drill-notes' %}">
+                        {% csrf_token %}
+                        <input type="hidden" name="promote" value="{{ note.code }}">
+                        <button type="submit">
+                            <i class="bi-star-fill"></i> Promote and Next
+                        </button>
+                    </form>
+                {% else %}
+                    <form method="post" action="{% url 'notes:drill-notes' %}">
+                        {% csrf_token %}
+                        <input type="hidden" name="demote" value="{{ note.code }}">
+                        <button type="submit">
+                            <i class="bi-star"></i> Demote and Next
+                        </button>
+                    </form>
+                {% endif %}
+                <form method="post" action="{% url 'notes:drill-notes' %}">
+                    {% csrf_token %}
+                    <button type="submit">
+                        <i class="bi-play"></i> Next
+                    </button>
+                </form>
+            </div>
+        {% endif %}
+    {% endif %}
+
+    {% if not error and not disable_begin %}
+        <div>
+            <small>{{ recent_drill_count }} note{{ recent_drill_count|pluralize }} drilled (or added) in the last 24h</small>
+        </div>
+    {% endif %}
+{% endblock %}

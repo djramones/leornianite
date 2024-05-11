@@ -1,0 +1,20 @@
+{% extends "notes/base.html" %}
+
+{% block title %}Random Note{% endblock %}
+
+{% block content %}
+    <h1><i class="bi-shuffle"></i> Random Note</h1>
+    {% if note %}
+        <div>
+            {% include 'notes/includes/note_card.html' with object=note omit_controls=True %}
+        </div>
+        <p>
+            <i class="bi-shuffle"></i>
+            <a href="{% url 'notes:random-note' %}">Next</a>
+        </p>
+    {% else %}
+        <div>
+            <p>No note available.</p>
+        </div>
+    {% endif %}
+{% endblock %}

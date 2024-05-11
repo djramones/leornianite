@@ -1,0 +1,17 @@
+{% extends "notes/base.html" %}
+
+{% block title %}New Note{% endblock %}
+
+{% block content %}
+    <h1><i class="bi-file-earmark-plus"></i> New Note</h1>
+    <form method="post" action="">
+        <div>
+            {% csrf_token %}
+            {{ form }}
+            <input type="hidden" name="{{ stage_field }}" value="1" />
+        </div>
+        <button type="submit">
+            <i class="bi-card-heading"></i> Preview
+        </button>
+    </form>
+{% endblock %}

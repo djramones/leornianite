@@ -1,0 +1,11 @@
+{% extends "notes/base.html" %}
+
+{% block title %}
+    Note — {{ object.created|date:"d M Y H:m (e)" }}
+{% endblock %}
+
+{% block content %}
+    <div>
+        {% include 'notes/includes/note_card.html' %}
+    </div>
+{% endblock %}

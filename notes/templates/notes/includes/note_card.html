@@ -1,0 +1,18 @@
+{% load note_controls %}
+
+<article class="note-card">
+    <div class="note-card-text">{{ object.html }}</div>
+    {% if not omit_controls %}
+        {% note_controls object request %}
+    {% endif %}
+    <footer>
+        <small>
+            <i class="bi-clock"></i>
+            <a href="{{ object.get_absolute_url }}">
+                <time datetime="{{ object.created|date:'c' }}" title="{{ object.created|date:'r' }}">
+                    {{ object.created|date:"d M Y H:m (e)" }}
+                </time>
+            </a>
+        </small>
+    </footer>
+</article>

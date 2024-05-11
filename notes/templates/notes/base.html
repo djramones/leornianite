@@ -1,0 +1,40 @@
+{% load static %}
+
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="{% static 'bootstrap/bootstrap-icons.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="icon" type="image/svg+xml" sizes="any" href="{% static 'images/leornian-icon.svg' %}">
+    <title>{% block title %}Leornianite{% endblock %}</title>
+</head>
+
+<body>
+    <div class="container">
+        <nav>
+            <p>
+                <small>
+                    <i class="bi-file-earmark-plus"></i>
+                    <a href="{% url 'notes:create-note' %}">Write</a>
+                    &bull;
+                    <i class="bi-collection"></i>
+                    <a href="{% url 'notes:list-notes' %}">List</a>
+                    &bull;
+                    <i class="bi-shuffle"></i>
+                    <a href="{% url 'notes:random-note' %}">Random</a>
+                    &bull;
+                    <i class="bi-arrow-repeat"></i>
+                    <a href="{% url 'notes:drill-notes' %}">Drill</a>
+                </small>
+            </p>
+        </nav>
+        <main>
+            {% block content %}{% endblock %}
+        </main>
+    </div>
+</body>
+
+</html>

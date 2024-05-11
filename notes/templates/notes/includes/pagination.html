@@ -1,0 +1,19 @@
+{% load humanize %}
+
+{% if page_obj.has_other_pages %}
+    <nav>
+        {% if page_obj.has_previous %}
+        <i class="bi-arrow-left-circle"></i>
+        <a href="?page={{ page_obj.previous_page_number }}">Previous</a>
+        &bull;
+        {% endif %}
+
+        Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages|intcomma }}
+
+        {% if page_obj.has_next %}
+        &bull;
+        <a href="?page={{ page_obj.next_page_number }}">Next</a>
+        <i class="bi-arrow-right-circle"></i>
+        {% endif %}
+    </nav>
+{% endif %}

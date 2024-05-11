@@ -1,0 +1,32 @@
+{% extends "notes/base.html" %}
+{% load humanize %}
+
+{% block title %}Notes{% endblock %}
+
+{% block content %}
+    <h1><i class="bi-collection"></i> Notes</h1>
+
+    <p>
+        <i class="bi-list"></i>
+        <a href="{% url 'notes:list-notes' %}">All Notes</a>
+        &bull;
+        <i class="bi-star-fill"></i>
+        <a href="{% url 'notes:list-promoted-notes' %}">Promoted Notes</a>
+    </p>
+
+    <p>
+        <small>
+            {{ paginator.count|intcomma }} note{{ paginator.count|pluralize }}
+        </small>
+    </p>
+
+    {% for object in object_list %}
+        <div>
+            {% include 'notes/includes/note_card.html' %}
+        </div>
+    {% empty %}
+        <p>No notes available.</p>
+    {% endfor %}
+
+    {% include 'notes/includes/pagination.html' %}
+{% endblock %}

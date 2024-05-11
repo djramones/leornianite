@@ -1,0 +1,40 @@
+{% extends "notes/base.html" %}
+
+{% block title %}Preview/Submit/Revise Note{% endblock %}
+
+{% block content %}
+    <h1><i class="bi-card-heading"></i> Preview &amp; Submit</h1>
+    <div class="note-card">
+        <div class="note-card-text">{{ form.instance.html }}</div>
+        <footer>
+            <small>
+                {# Simulate note.created: #}
+                <i class="bi-clock"></i>
+                <time datetime="{% now 'c' %}" title="{% now 'r' %}">
+                    {% now "d M Y H:m (e)" %}
+                </time>
+            </small>
+        </footer>
+    </div>
+    <form method="post" action="">
+        {% csrf_token %}
+        {% for field in form %}{{ field.as_hidden }}{% endfor %}
+        <input type="hidden" name="{{ stage_field }}" value="2" />
+        <input type="hidden" name="{{ hash_field }}" value="{{ hash_value }}" />
+        <button type="submit">
+            <i class="bi-check-circle"></i> Submit
+        </button>
+    </form>
+
+    <h1><i class="bi-pencil-square"></i> Revise</h1>
+    <form method="post" action="">
+        <div>
+            {% csrf_token %}
+            {{ form }}
+            <input type="hidden" name="{{ stage_field }}" value="1" />
+        </div>
+        <button type="submit">
+            <i class="bi-card-heading"></i> Preview Again
+        </button>
+    </form>
+{% endblock %}

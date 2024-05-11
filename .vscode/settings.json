@@ -1,0 +1,9 @@
+{
+    "pylint.args": [
+        "--load-plugins",
+        "pylint_django",
+        "--django-settings-module",
+        "leornianite.settings"
+    ],
+    "pylint.importStrategy": "fromEnvironment"
+}

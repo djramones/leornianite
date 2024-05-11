@@ -1,0 +1,24 @@
+{% extends "notes/base.html" %}
+
+{% block title %}Delete Note{% endblock %}
+
+{% block content %}
+    <h1><i class="bi-trash"></i> Delete Note</h1>
+    <div>
+        <div>
+            <p>Are you sure you want to delete the note below? <strong>This cannot be undone.</strong></p>
+            <form method="post">
+                {% csrf_token %}
+                {{ form }}
+                <input type="hidden" name="redirect_url" value="{{ redirect_url }}">
+                <button type="submit">
+                    <i class="bi-trash"></i> Confirm
+                </button>
+                {% if redirect_url %}
+                    <a href="{{ redirect_url }}">Cancel</a>
+                {% endif %}
+            </form>
+        </div>
+        {% include 'notes/includes/note_card.html' with omit_controls=True %}
+    </div>
+{% endblock %}
