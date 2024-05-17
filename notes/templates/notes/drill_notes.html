@@ -25,11 +25,6 @@
                 {% endif %}
             </div>
         {% else %}
-            {% if note.promoted %}
-                <p>
-                    <i class="bi-star-fill"></i> Promoted Note
-                </p>
-            {% endif %}
             <div>
                 {% include 'notes/includes/note_card.html' with object=note omit_controls=True %}
             </div>

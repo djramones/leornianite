@@ -7,6 +7,10 @@
     {% endif %}
     <footer>
         <small>
+            {% if object.promoted %}
+                <i class="bi-star-fill"></i> Promoted
+                &nbsp;
+            {% endif %}
             <i class="bi-clock"></i>
             <a href="{{ object.get_absolute_url }}">
                 <time datetime="{{ object.created|date:'c' }}" title="{{ object.created|date:'r' }}">
