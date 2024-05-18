@@ -14,7 +14,7 @@
             <i class="bi-clock"></i>
             <a href="{{ object.get_absolute_url }}">
                 <time datetime="{{ object.created|date:'c' }}" title="{{ object.created|date:'r' }}">
-                    {{ object.created|date:"d M Y H:m (e)" }}
+                    {{ object.created|date:"d M Y H:i (e)" }}
                 </time>
             </a>
         </small>
