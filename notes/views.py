@@ -2,6 +2,7 @@ import itertools
 import random
 
 from django.contrib.auth import get_user_model
+from django.contrib.postgres.search import SearchQuery, SearchRank, SearchVector
 from django.core.paginator import EmptyPage, Paginator
 from django.forms import modelform_factory
 from django.http import HttpResponseRedirect
@@ -61,6 +62,18 @@ class ListNotes(GracefulListView):
 class ListPromotedNotes(ListNotes):
     def get_queryset(self):
         return Note.objects.filter(promoted=True)
+
+
+class SearchNotes(ListNotes):
+    def get_queryset(self):
+        qs = super().get_queryset()
+        vector = SearchVector("text")
+        query = SearchQuery(self.request.GET.get("query", ""))
+        return (
+            qs.annotate(search=vector, rank=SearchRank(vector, query))
+            .filter(search=query)
+            .order_by("-rank")
+        )
 
 
 class DetailNote(DetailView):

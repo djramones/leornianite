@@ -13,6 +13,7 @@ urlpatterns = [
     ),
     path("random/", views.RandomNote.as_view(), name="random-note"),
     path("drill/", views.DrillNotes.as_view(), name="drill-notes"),
+    path("search/", views.SearchNotes.as_view(), name="search-notes"),
     path("<slug:slug>/delete/", views.DeleteNote.as_view(), name="delete-note"),
     path("<slug:slug>/", views.DetailNote.as_view(), name="detail-note"),
     path("", RedirectView.as_view(url=reverse_lazy("notes:list-notes"))),

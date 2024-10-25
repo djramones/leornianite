@@ -4,6 +4,8 @@
 {% block title %}Notes{% endblock %}
 
 {% block content %}
+    {% with url_name=request.resolver_match.url_name %}
+
     <h1><i class="bi-collection"></i> Notes</h1>
 
     <p>
@@ -14,19 +16,41 @@
         <a href="{% url 'notes:list-promoted-notes' %}">Promoted Notes</a>
     </p>
 
-    <p>
-        <small>
-            {{ paginator.count|intcomma }} note{{ paginator.count|pluralize }}
-        </small>
-    </p>
+    {% if url_name == 'search-notes' %}
+        <form method="get" action="{% url 'notes:search-notes' %}">
+            <input
+                name="query"
+                type="text"
+                placeholder="Search&hellip;"
+                {% if request.GET.query.strip %}
+                    value="{{ request.GET.query.strip }}"
+                {% endif %}
+            >
+            <button type="submit" aria-label="Search">
+                <i class="bi-search"></i>
+            </button>
+        </form>
+    {% endif %}
+
+    {% if url_name != 'search-notes' or request.GET.query.strip %}
+        <p>
+            <small>
+                {{ paginator.count|intcomma }} note{{ paginator.count|pluralize }}
+            </small>
+        </p>
+    {% endif %}
 
     {% for object in object_list %}
         <div>
             {% include 'notes/includes/note_card.html' %}
         </div>
     {% empty %}
-        <p>No notes available.</p>
+        {% if url_name != 'search-notes' %}
+            <p>No notes available.</p>
+        {% endif %}
     {% endfor %}
 
     {% include 'notes/includes/pagination.html' %}
+
+    {% endwith %}
 {% endblock %}
